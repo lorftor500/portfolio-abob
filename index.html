@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моё портфолио программиста</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        nav {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        section {
+            padding: 3rem 0;
+        }
+        
+        .about, .skills, .projects, .contact {
+            margin-bottom: 2rem;
+        }
+        
+        h1, h2, h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .skill-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .project-image {
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+        }
+        
+        .project-info {
+            padding: 1.5rem;
+        }
+        
+        .project-info h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-links {
+            margin-top: 1rem;
+        }
+        
+        .project-links a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 5px 10px;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+        
+        .project-links a:hover {
+            background-color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+        }
+        
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+		
+		footer {
+        background-color: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 2rem 0;
+        margin-top: 2rem;
+    }
+
+    .social-links {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .github-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: white;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        background-color: #333;
+        transition: all 0.3s ease;
+    }
+
+    .github-link:hover {
+        background-color: #4078c0;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .github-link svg {
+        width: 20px;
+        height: 20px;
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Ситдиков Ринас Рамилевич</h1>
+            <p>Профессиональный программист | Специализация</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#about">Обо мне</a></li>
+                <li><a href="#skills">Навыки</a></li>
+                <li><a href="#projects">Проекты</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <section id="about" class="about">
+            <h2>Обо мне</h2>
+            <p>Привет! Я Ситдиков Ринас Рамилевич профессиональный программист с 4 летним опытом работы в разработке программного обеспечения. Специализируюсь на С#.</p>
+            <p>Моя страсть - создавать эффективные, масштабируемые и удобные для пользователя приложения. Я постоянно изучаю новые технологии и совершенствую свои навыки.</p>
+        </section>
+        
+        <section id="skills" class="skills">
+            <h2>Мои навыки</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Frontend</h3>
+                    <p>HTML, CSS, JavaScript</p>
+                    <p>React, Vue.js</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Backend</h3>
+                    <p>Node.js, Python</p>
+                    <p>Django, Express</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Базы данных</h3>
+                    <p>MySQL, PostgreSQL</p>
+                    <p>MongoDB</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Другое</h3>
+                    <p>Git, Docker</p>
+                    <p>CI/CD</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="projects" class="projects">
+            <h2>Мои проекты</h2>
+            <div class="projects-grid">
+                <!-- Проект 1 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        
+                    </div>
+                    <div class="project-info">
+                        <h3>Школьный Журнал</h3>
+                        <p>Краткое описание проекта. Какие технологии использовались, какие проблемы решал проект.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/lorftor500/Dnevnik" target="_blank">GitHub</a>
+                            <a href="https://github.com/lorftor500/Dnevnik.git" target="_blank">Скачать</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Проект 2 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        
+                    </div>
+                    <div class="project-info">
+                        <h3>ЭВМ</h3>
+                        <p>Краткое описание проекта. Какие технологии использовались, какие проблемы решал проект.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/lorftor500/EVM" target="_blank">GitHub</a>
+                            <a href="https://github.com/lorftor500/EVM.git" target="_blank">Скачать</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Проект 3 -->
+                <div class="project-card">
+                    <div class="project-image">
+                       
+                    </div>
+                    <div class="project-info">
+                        <h3>Сайт магазин книг</h3>
+                        <p>Краткое описание проекта. Какие технологии использовались, какие проблемы решал проект.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/lorftor500/literary-lot" target="_blank">GitHub</a>
+                            <a href="https://github.com/lorftor500/literary-lot.git" target="_blank">Скачать</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Добавьте больше проектов по аналогии -->
+            </div>
+        </section>
+        
+        <section id="contact" class="contact">
+            <h2>Связаться со мной</h2>
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Ваше имя</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Ваш email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Сообщение</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit">Отправить</button>
+                </form>
+            </div>
+        </section>
+    </div>
+    
+   <footer>
+    <div class="container">
+        <p>© 2025 Моё портфолио. Все права защищены.</p>
+        <div class="social-links">
+            <a href="https://github.com/lorftor500" target="_blank" class="github-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+                Мой GitHub
+            </a>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>
