@@ -88,10 +88,18 @@
             margin-bottom: 2rem;
         }
         
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        /* Стили для слайдера навыков */
+        .skills-slider {
+            position: relative;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+        
+        .skills-container {
+            display: flex;
+            transition: transform 0.5s ease;
             gap: 20px;
+            padding: 0 10px;
         }
         
         .skill-card {
@@ -100,6 +108,54 @@
             border-radius: 5px;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             text-align: center;
+            min-width: 200px;
+            flex: 0 0 auto;
+        }
+        
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .slider-dot.active {
+            background-color: var(--secondary-color);
+        }
+        
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255,255,255,0.7);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .slider-arrow.left {
+            left: 10px;
+        }
+        
+        .slider-arrow.right {
+            right: 10px;
         }
         
         .projects-grid {
@@ -216,12 +272,14 @@
                 margin: 5px 0;
             }
             
-            .skills-grid {
-                grid-template-columns: 1fr;
+            .slider-arrow {
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
             }
         }
-		
-		footer {
+        
+        footer {
         background-color: #2c3e50;
         color: white;
         text-align: center;
@@ -289,26 +347,45 @@
         
         <section id="skills" class="skills">
             <h2>Мои навыки</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <h3>Frontend</h3>
-                    <p>HTML, CSS, JavaScript</p>
-                    <p>React, Vue.js</p>
+            <div class="skills-slider">
+                <button class="slider-arrow left">&lt;</button>
+                <div class="skills-container">
+                    <div class="skill-card">
+                        <h3>Frontend</h3>
+                        <p>HTML, CSS, JavaScript</p>
+                        <p>React, Vue.js</p>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Backend</h3>
+                        <p>Node.js, Python</p>
+                        <p>Django, Express</p>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Базы данных</h3>
+                        <p>MySQL, PostgreSQL</p>
+                        <p>MongoDB</p>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Другое</h3>
+                        <p>Git, Docker</p>
+                        <p>CI/CD</p>
+                    </div>
+                    <div class="skill-card">
+                        <h3>C#/.NET</h3>
+                        <p>C#, ASP.NET Core</p>
+                        <p>Entity Framework</p>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Мобильная разработка</h3>
+                        <p>React Native</p>
+                        <p>Xamarin</p>
+                    </div>
                 </div>
-                <div class="skill-card">
-                    <h3>Backend</h3>
-                    <p>Node.js, Python</p>
-                    <p>Django, Express</p>
-                </div>
-                <div class="skill-card">
-                    <h3>Базы данных</h3>
-                    <p>MySQL, PostgreSQL</p>
-                    <p>MongoDB</p>
-                </div>
-                <div class="skill-card">
-                    <h3>Другое</h3>
-                    <p>Git, Docker</p>
-                    <p>CI/CD</p>
+                <button class="slider-arrow right">&gt;</button>
+                <div class="slider-nav">
+                    <div class="slider-dot active"></div>
+                    <div class="slider-dot"></div>
+                    <div class="slider-dot"></div>
                 </div>
             </div>
         </section>
@@ -360,8 +437,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- Добавьте больше проектов по аналогии -->
             </div>
         </section>
         
@@ -401,6 +476,91 @@
     </div>
 </footer>
 
+<script>
+    // Слайдер навыков
+    document.addEventListener('DOMContentLoaded', function() {
+        const slider = document.querySelector('.skills-container');
+        const cards = document.querySelectorAll('.skill-card');
+        const dots = document.querySelectorAll('.slider-dot');
+        const arrowLeft = document.querySelector('.slider-arrow.left');
+        const arrowRight = document.querySelector('.slider-arrow.right');
+        
+        let currentIndex = 0;
+        const cardsPerSlide = 4;
+        const cardWidth = cards[0].offsetWidth + 20; // ширина карточки + gap
+        
+        // Функция для обновления позиции слайдера
+        function updateSlider() {
+            const offset = -currentIndex * cardWidth * cardsPerSlide;
+            slider.style.transform = `translateX(${offset}px)`;
+            
+            // Обновляем активную точку
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+        
+        // Обработчики для стрелок
+        arrowLeft.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlider();
+            }
+        });
+        
+        arrowRight.addEventListener('click', () => {
+            const maxIndex = Math.ceil(cards.length / cardsPerSlide) - 1;
+            if (currentIndex < maxIndex) {
+                currentIndex++;
+                updateSlider();
+            }
+        });
+        
+        // Обработчики для точек
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateSlider();
+            });
+        });
+        
+        // Адаптация к количеству карточек на экране
+        function handleResize() {
+            const width = window.innerWidth;
+            if (width < 768) {
+                // На мобильных показываем 1 карточку
+                cardsPerSlide = 1;
+            } else if (width < 992) {
+                // На планшетах показываем 2 карточки
+                cardsPerSlide = 2;
+            } else {
+                // На десктопах показываем 4 карточки
+                cardsPerSlide = 4;
+            }
+            
+            // Пересчитываем количество точек
+            const dotsCount = Math.ceil(cards.length / cardsPerSlide);
+            const dotsContainer = document.querySelector('.slider-nav');
+            dotsContainer.innerHTML = '';
+            
+            for (let i = 0; i < dotsCount; i++) {
+                const dot = document.createElement('div');
+                dot.className = `slider-dot ${i === currentIndex ? 'active' : ''}`;
+                dot.addEventListener('click', () => {
+                    currentIndex = i;
+                    updateSlider();
+                });
+                dotsContainer.appendChild(dot);
+            }
+            
+            updateSlider();
+        }
+        
+        // Инициализация и обработка ресайза
+        handleResize();
+        window.addEventListener('resize', handleResize);
+    });
+</script>
 
 </body>
 </html>
